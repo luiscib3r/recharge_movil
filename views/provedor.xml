@@ -1,0 +1,69 @@
+<odoo>
+  <data>
+    <record model="ir.actions.act_window" id="recharge_movil.action_provedor">
+      <field name="name">Providers</field>
+      <field name="res_model">recharge_movil.provedor</field>
+      <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.provedor_kanban">
+      <field name="name">recharge_movil.provedor.kanban</field>
+      <field name="model">recharge_movil.provedor</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <templates>
+            <t t-name="kanban-box">
+              <div t-attf-class="oe_kanban_global_click">
+                <div class="o_dropdown_kanban dropdown" tabindex="-1">
+                  <a class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" href="#" role="button" aria-label="Opciones" title="Opciones">
+                    <span class="fa fa-ellipsis-v"/>
+                  </a>
+                  <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <a type="delete" role="menuitem" class="dropdown-item">Borrar</a>
+                  </div>
+                </div>
+                <img src="/recharge_movil/static/user.png" class="oe_module_icon" alt="Avatar"/>
+                <div class="oe_module_desc">
+                  <h4 class="o_kanban_record_title">
+                    <strong><field name="name"/></strong>
+                  </h4>
+                  <div>
+                    <span class="fa rounded-circle fa-money"></span> Debe: <field name="debe"/>
+                  </div>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.provedor_form">
+      <field name="name">recharge_movil.provedor.form</field>
+      <field name="model">recharge_movil.provedor</field>
+      <field name="arch" type="xml">
+        <form string="Provider">
+          <sheet>
+            <group>
+              <field name="name"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.provedor_tree">
+      <field name="name">recharge_movil.provedor.tree</field>
+      <field name="model">recharge_movil.provedor</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="debe"/>
+        </tree>
+      </field>
+    </record>
+
+    <menuitem name="Providers" id="recharge_movil.menu_provedor" parent="recharge_movil.menu_root"
+              action="recharge_movil.action_provedor"/>
+  </data>
+</odoo>

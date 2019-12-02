@@ -1,0 +1,43 @@
+<odoo>
+  <data>
+    <record model="ir.actions.act_window" id="recharge_movil.action_oferta">
+      <field name="name">Ofertas</field>
+      <field name="res_model">recharge_movil.oferta</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.oferta_form">
+      <field name="name">recharge_movil.oferta.form</field>
+      <field name="model">recharge_movil.oferta</field>
+      <field name="arch" type="xml">
+        <form string="Oferta">
+          <sheet>
+            <group>
+              <field name="tipo_recarga"/>
+              <field name="precio"/>
+              <field name="saldo"/>
+              <field name="saldo_retorno" attrs="{'invisible': [('tipo_recarga', '!=', 2)],}"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.oferta_tree">
+      <field name="name">recharge_movil.oferta.tree</field>
+      <field name="model">recharge_movil.oferta</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="tipo_recarga"/>
+          <field name="precio"/>
+          <field name="saldo"/>
+          <field name="saldo_retorno"/>
+        </tree>
+      </field>
+    </record>
+
+    <menuitem name="Ofertas" id="recharge_movil.submenu_oferta" parent="recharge_movil.menu_root"
+              action="recharge_movil.action_oferta"/>
+  </data>
+</odoo>

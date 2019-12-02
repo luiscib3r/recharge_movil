@@ -1,0 +1,161 @@
+<odoo>
+  <data>
+    <record model="ir.actions.act_window" id="recharge_movil.action_recarga">
+      <field name="name">Recargas</field>
+      <field name="res_model">recharge_movil.recarga</field>
+      <field name="view_mode">kanban,calendar,tree,form</field>
+      <field name="context">{"search_default_current_week":1}</field>
+    </record>
+
+   <record model="ir.ui.view" id="recharge_movil.recarga_kanban">
+      <field name="name">recharge_movil.recarga.kanban</field>
+      <field name="model">recharge_movil.recarga</field>
+      <field name="arch" type="xml">
+        <kanban default_group_by="estado" class="o_kanban_small_column o_opportunity_kanban" on_create="quick_create" quick_create_view="recharge_movil.recarga_form_quick" archivable="false">
+          <field name="provedor"/>
+          <field name="phone_number"/>
+          <field name="oferta"/>
+          <field name="fecha_recarga"/>
+          <field name="precio"/>
+          <templates>
+            <t t-name="kanban-box">
+              <div t-attf-class="oe_kanban_global_click">
+                <div class="o_dropdown_kanban dropdown" tabindex="-1">
+                  <a class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" href="#" role="button" aria-label="Opciones" title="Opciones">
+                    <span class="fa fa-ellipsis-v"/>
+                  </a>
+                  <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <a type="delete" role="menuitem" class="dropdown-item">Borrar</a>
+                  </div>
+                </div>
+                <div class="oe_kanban_content">
+                  <div>
+                    <span class="fa rounded-circle fa-user"></span> <strong><field name="provedor"/></strong>
+                  </div>
+                  <div>
+
+                  </div>
+                  <div>
+                    <span class="fa rounded-circle fa-phone-square"></span> <field name="phone_number"/>
+                  </div>
+                  <div>
+                    <span class="fa rounded-circle fa-cc-mastercard"></span> <field name="linea"/>
+                  </div>
+                  <div>
+                    <span class="fa rounded-circle fa-calendar"></span> <field name="fecha_recarga"/>
+                  </div>
+                  <div class="o_kanban_record_bottom">
+                    <div class="oe_kanban_bottom_left">
+                      <span class="fa rounded-circle fa-money"></span> <field name="oferta"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+    <record model="ir.ui.view" id="recharge_movil.recarga_form">
+      <field name="name">recharge_movil.recarga.form</field>
+      <field name="model">recharge_movil.recarga</field>
+      <field name="arch" type="xml">
+        <form string="Recarga">
+          <sheet>
+            <group>
+              <field name="estado"/>
+            </group>
+            <group>
+              <field name="provedor"/>
+              <field name="phone_number"/>
+            </group>
+            <group>
+              <field name="oferta"/>
+              <field name="precio"/>
+              <field name="saldo"/>
+            </group>
+            <group>
+              <field name="tipo_linea" invisible="1"/>
+              <field name="tipo_recarga" invisible="1"/>
+              <field name="linea" domain="[('tipo_linea', '=', tipo_linea)]"/>
+              <field name="linea_retorno" attrs="{'invisible': [('tipo_recarga', '!=', 2)],}"/>
+            </group>
+            <group>
+              <field name="fecha_recarga"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.recarga_form_quick">
+      <field name="name">recharge_movil.recarga.form</field>
+      <field name="model">recharge_movil.recarga</field>
+      <field name="arch" type="xml">
+        <form string="Recarga">
+            <group>
+              <field name="provedor"/>
+              <field name="phone_number"/>
+              <field name="oferta"/>
+              <field name="tipo_linea" invisible="1"/>
+              <field name="tipo_recarga" invisible="1"/>
+              <field name="linea" domain="[('tipo_linea', '=', tipo_linea)]"/>
+              <field name="linea_retorno" attrs="{'invisible': [('tipo_recarga', '!=', 2)],}"/>
+              <field name="fecha_recarga"/>
+            </group>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.recarga_tree">
+      <field name="name">recharge_movil.recarga.tree</field>
+      <field name="model">recharge_movil.recarga</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="provedor"/>
+          <field name="phone_number"/>
+          <field name="fecha_recarga"/>
+          <field name="precio"/>
+          <field name="saldo"/>
+          <field name="estado"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.recarga_calendar">
+      <field name="name">recharge_movil.recarga.calendar</field>
+      <field name="model">recharge_movil.recarga</field>
+      <field name="arch" type="xml">
+        <calendar string="Recargas" date_start="fecha_recarga" mode="month" color="provedor" form_view_id="recharge_movil.recarga_form" event_open_popup="True" quick_add="False">
+          <field name="provedor"/>
+          <field name="phone_number"/>
+          <field name="oferta"/>
+          <field name="estado"/>
+        </calendar>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.recarga_search">
+      <field name="name">recharge_movil.recarga.search</field>
+      <field name="model">recharge_movil.recarga</field>
+      <field name="arch" type="xml">
+        <search>
+          <filter string="Esta semana" name="current_week" separator="1"
+            domain="[
+            ('fecha_recarga', '&gt;=', ((context_today()+ relativedelta(weeks=-1, days=1, weekday=0)).strftime('%%Y-%%m-%%d'))),
+            ('fecha_recarga', '&lt;=', ((context_today()+ relativedelta(weeks=0, weekday=6)).strftime('%%Y-%%m-%%d')))]"
+            help="Esta semana"/>
+            <filter string="Semana pasada" name="last_week" separator="1"
+              domain="[
+              ('fecha_recarga', '&gt;=', ((context_today()+ relativedelta(weeks=-2, days=1, weekday=0)).strftime('%%Y-%%m-%%d'))),
+              ('fecha_recarga', '&lt;=', ((context_today()+ relativedelta(weeks=-1, weekday=6)).strftime('%%Y-%%m-%%d')))]"
+              help="Semana pasada"/>
+        </search>
+      </field>
+   </record>
+
+
+    <menuitem name="Recargas" id="recharge_movil.submenu_recarga" parent="recharge_movil.menu_root"
+              action="recharge_movil.action_recarga"/>
+  </data>
+</odoo>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates xml:space="preserve">
+
+    <t t-name="DataMain">
+        <div class="container py-2 o_web_settings_dashboard">
+          <div>
+            <div class="o_recharge_movil_datascience"></div>
+          </div>
+        </div>
+    </t>
+
+    <t t-name="DataScience">
+      <table class="table table-hover table-striped">
+        <thead class="bg-primary">
+          <tr>
+            <th>Resumen de la semana</th>
+            <th> </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Cantidad de recargas realizadas</th>
+            <td class="text-right"><t t-esc="widget.data.total_recarga" /></td>
+          </tr>
+          <tr>
+            <th scope="row">Cantidad de dinero recaudado</th>
+            <td class="text-right"><t t-esc="widget.data.m_recarga" /></td>
+          </tr>
+          <tr>
+            <th scope="row">Cantidad de saldo invertido</th>
+            <td class="text-right"><t t-esc="widget.data.s_recarga" /></td>
+          </tr>
+          <tr>
+            <th scope="row">Neto</th>
+            <td class="text-right"><t t-esc="widget.data.n_recarga" /></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table class="table table-hover table-striped">
+        <thead class="bg-primary">
+          <tr class="text-right">
+            <th> </th>
+            <th>Recargas realizadas</th>
+            <th>Dinero recaudado</th>
+            <th>Saldo invertido</th>
+            <th>Neto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Recarga Completa</th>
+            <td class="text-right"><t t-esc="widget.data.completa" /></td>
+            <td class="text-right"><t t-esc="widget.data.m_completa" /></td>
+            <td class="text-right"><t t-esc="widget.data.s_completa" /></td>
+            <td class="text-right"><t t-esc="widget.data.n_completa" /></td>
+          </tr>
+          <tr>
+            <th scope="row">Recarga de Bono</th>
+            <td class="text-right"><t t-esc="widget.data.bono" /></td>
+            <td class="text-right"><t t-esc="widget.data.m_bono" /></td>
+            <td class="text-right"><t t-esc="widget.data.s_bono" /></td>
+            <td class="text-right"><t t-esc="widget.data.n_bono" /></td>
+          </tr>
+          <tr>
+            <th scope="row">Recarga simple</th>
+            <td class="text-right"><t t-esc="widget.data.simple" /></td>
+            <td class="text-right"><t t-esc="widget.data.m_simple" /></td>
+            <td class="text-right"><t t-esc="widget.data.s_simple" /></td>
+            <td class="text-right"><t t-esc="widget.data.n_simple" /></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="row py-2">
+        <h3 class="text-center col-12">Capacidad de las líneas según las ofertas</h3>
+      </div>
+
+      <t t-foreach="widget.data.lineas" t-as="line">
+        <div class="row">
+        <h4 class="text-center"><t t-esc="line.name" /></h4>
+        <table class="table table-hover table-striped">
+          <thead class="bg-primary">
+            <tr class="text-right">
+              <th class="text-left">Oferta</th>
+              <th>Cantidad de recargas</th>
+              <th>Dinero a recaudar</th>
+              <th>Saldo a invertir</th>
+              <th>Saldo Restante</th>
+            </tr>
+          </thead>
+          <tbody>
+            <t t-foreach="line.oferta" t-as="ofert">
+              <tr>
+                <th scope="row"><t t-esc="ofert.name" /></th>
+                <td class="text-right"><t t-esc="ofert.cant" /></td>
+                <td class="text-right">$ <t t-esc="ofert.dinero" /></td>
+                <td class="text-right">$ <t t-esc="ofert.saldo" /></td>
+                <td class="text-right"><t t-esc="ofert.restante" /></td>
+              </tr>
+            </t>
+          </tbody>
+        </table>
+        </div>
+      </t>
+    </t>
+
+</templates>

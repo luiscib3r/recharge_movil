@@ -1,0 +1,11 @@
+<odoo>
+  <data>
+    <record model="ir.actions.client" id="recharge_movil.action_datascience">
+      <field name="name">Estadísticas</field>
+      <field name="tag">recharge_movil.datascience</field>
+    </record>
+
+    <menuitem name="Estadísticas" id="recharge_movil.menu_datascience" parent="recharge_movil.menu_root"
+              action="recharge_movil.action_datascience"/>
+  </data>
+</odoo>

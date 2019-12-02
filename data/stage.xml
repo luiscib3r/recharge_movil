@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+  <record model="recharge_movil.estado" id="stage_1">
+    <field name="name">Pendiente</field>
+    <field name="sequence">1</field>
+  </record>
+
+  <record model="recharge_movil.estado" id="stage_2">
+    <field name="name">Recargado y no pagado</field>
+    <field name="sequence">2</field>
+  </record>
+
+  <record model="recharge_movil.estado" id="stage_3">
+    <field name="name">Recargado y pagado</field>
+    <field name="sequence">3</field>
+  </record>
+</odoo>

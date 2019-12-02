@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_recharge_movil_recarga,recharge_movil.recarga,model_recharge_movil_recarga,group_recharge_movil,1,1,1,1
+access_recharge_movil_oferta,recharge_movil.oferta,model_recharge_movil_oferta,group_recharge_movil,1,1,1,1
+access_recharge_movil_estado,recharge_movil.estado,model_recharge_movil_estado,group_recharge_movil,1,1,0,0
+access_recharge_movil_cashline,recharge_movil.cashline,model_recharge_movil_cashline,group_recharge_movil,1,1,1,1
+access_recharge_movil_provedor,recharge_movil.provedor,model_recharge_movil_provedor,group_recharge_movil,1,1,1,1

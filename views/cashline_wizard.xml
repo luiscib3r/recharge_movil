@@ -1,0 +1,30 @@
+<odoo>
+  <data>
+
+    <record model="ir.ui.view" id="recharge_movil.cashline_wizard_form">
+      <field name="name">recharge_movil.cashline_wizard.form</field>
+      <field name="model">recharge_movil.cashline_wizard</field>
+      <field name="arch" type="xml">
+        <form string="Agregar Saldo">
+            <group>
+                <field name="asaldo"/>
+            </group>
+            <footer>
+              <button name="recarga" type="object"
+                string="Recargar" class="oe_highlight"/>
+              <button special="cancel" string="Cancelar"/>
+            </footer>
+        </form>
+      </field>
+    </record>
+
+    <act_window id="launch_cashline_wizard"
+                    name="Agregar Saldo"
+                    src_model="recharge_movil.cashline"
+                    res_model="recharge_movil.cashline_wizard"
+                    view_mode="form"
+                    target="new"
+                    key2="client_action_multi"/>
+
+  </data>
+</odoo>

@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+      <template id="data_analyzer" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+          <script type="text/javascript" src="/recharge_movil/static/src/js/datascience.js"></script>
+        </xpath>
+      </template>
+    </data>
+</odoo>

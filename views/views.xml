@@ -1,0 +1,316 @@
+<odoo>
+  <data>
+    <record model="ir.actions.act_window" id="recharge_movil.action_cliente">
+      <field name="name">Clientes</field>
+      <field name="res_model">base_enterprise.cliente</field>
+      <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="recharge_movil.action_cashline">
+      <field name="name">Gestión de Saldo</field>
+      <field name="res_model">recharge_movil.cashline</field>
+      <field name="view_mode">kanban,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="recharge_movil.action_recarga">
+      <field name="name">Recargas</field>
+      <field name="res_model">recharge_movil.recarga</field>
+      <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="recharge_movil.action_oferta">
+      <field name="name">Ofertas</field>
+      <field name="res_model">recharge_movil.oferta</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.client" id="recharge_movil.action_datascience">
+      <field name="name">Estadísticas</field>
+      <field name="tag">recharge_movil.datascience</field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.cliente_kanban">
+      <field name="name">recharge_movil.cliente.kanban</field>
+      <field name="model">base_enterprise.cliente</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <templates>
+            <t t-name="kanban-box">
+              <div t-attf-class="oe_kanban_global_click">
+                <div class="o_dropdown_kanban dropdown" tabindex="-1">
+                  <a class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" href="#" role="button" aria-label="Opciones" title="Opciones">
+                    <span class="fa fa-ellipsis-v"/>
+                  </a>
+                  <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <a type="delete" role="menuitem" class="dropdown-item">Borrar</a>
+                  </div>
+                </div>
+                <img src="/base_enterprise/static/user.png" class="oe_module_icon" alt="Avatar"/>
+                <div class="oe_module_desc">
+                  <h4 class="o_kanban_record_title">
+                    <strong><field name="name"/></strong>
+                  </h4>
+                  <field name="phone_number"/>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.cashline_kanban">
+      <field name="name">recharge_movil.cashline.kanban</field>
+      <field name="model">recharge_movil.cashline</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <templates>
+            <t t-set="datos" t-value="data" />
+            <t t-name="kanban-box">
+              <div t-attf-class="oe_kanban_global_click">
+                <div class="o_dropdown_kanban dropdown" tabindex="-1">
+                  <a class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" href="#" role="button" aria-label="Opciones" title="Opciones">
+                    <span class="fa fa-th-large"/>
+                  </a>
+                  <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <a type="delete" role="menuitem" class="dropdown-item">Borrar</a>
+                  </div>
+                </div>
+                <div class="card bg-primary text-center mt-3">
+                  <h4 class="card-header o_default_snippet_text"><field name="name" /></h4>
+                    <div class="card-body">
+                      <h2 class="card-title">
+                        <span class="s_comparisons_currency o_default_snippet_text">$</span>
+                        <span class="s_comparisons_price"><b class="o_default_snippet_text"><field name="disponible" /></b></span>
+                      </h2>
+                    </div>
+                    <ul class="list-group list-group-flush" style="color:black;">
+                      <li class="list-group-item o_default_snippet_text"><strong>Saldo inicial:</strong> $<field name="saldo" /></li>
+                      <li class="list-group-item o_default_snippet_text"><strong>Saldo gastado:</strong> $<field name="gastado" /></li>
+                      <li class="list-group-item o_default_snippet_text"><strong>Recargas realizadas:</strong> <field name="realizada" /></li>
+                      <li class="list-group-item o_default_snippet_text"><strong>Recargas pendientes:</strong> <field name="pendiente" /></li>
+                      <li class="list-group-item o_default_snippet_text"><strong>Saldo comprometido:</strong> $<field name="comprometido" /></li>
+                    </ul>
+                    <div class="card-footer">
+                      <strong>Cantidad recaudada:</strong> $<field name="recaudado" />
+                    </div>
+                  </div>
+                </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.recarga_kanban">
+      <field name="name">recharge_movil.recarga.kanban</field>
+      <field name="model">recharge_movil.recarga</field>
+      <field name="arch" type="xml">
+        <kanban default_group_by="estado" class="o_kanban_small_column o_opportunity_kanban" on_create="quick_create" quick_create_view="recharge_movil.recarga_form_quick" archivable="false">
+          <field name="cliente"/>
+          <field name="phone_number"/>
+          <field name="oferta"/>
+          <field name="fecha_recarga"/>
+          <field name="precio"/>
+          <templates>
+            <t t-name="kanban-box">
+              <div t-attf-class="oe_kanban_global_click">
+                <div class="o_dropdown_kanban dropdown" tabindex="-1">
+                  <a class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" href="#" role="button" aria-label="Opciones" title="Opciones">
+                    <span class="fa fa-ellipsis-v"/>
+                  </a>
+                  <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <a type="delete" role="menuitem" class="dropdown-item">Borrar</a>
+                  </div>
+                </div>
+                <div class="oe_kanban_content">
+                  <div>
+                    <span class="fa rounded-circle fa-user"></span> <strong><field name="cliente"/></strong>
+                  </div>
+                  <div>
+
+                  </div>
+                  <div>
+                    <span class="fa rounded-circle fa-phone-square"></span> <field name="phone_number"/>
+                  </div>
+                  <div>
+                    <span class="fa rounded-circle fa-cc-mastercard"></span> <field name="linea"/>
+                  </div>
+                  <div class="o_kanban_record_bottom">
+                    <div class="oe_kanban_bottom_left">
+                      <span class="fa rounded-circle fa-money"></span> <field name="oferta"/>
+                    </div>
+                    <div class="oe_kanban_bottom_right">
+                      <span class="fa rounded-circle fa-calendar"></span> <field name="fecha_recarga"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.cliente_search">
+      <field name="name">recharge_movil.cliente.search</field>
+      <field name="model">base_enterprise.cliente</field>
+      <field name="arch" type="xml">
+        <search>
+          <field name="name"/>
+          <field name="phone_number"/>
+        </search>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.cliente_form">
+      <field name="name">recharge_movil.cliente.form</field>
+      <field name="model">base_enterprise.cliente</field>
+      <field name="arch" type="xml">
+        <form string="Cliente de recarga móvil">
+          <sheet>
+            <group>
+              <field name="name"/>
+              <field name="phone_number"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.recarga_form">
+      <field name="name">recharge_movil.recarga.form</field>
+      <field name="model">recharge_movil.recarga</field>
+      <field name="arch" type="xml">
+        <form string="Recarga">
+          <sheet>
+            <group>
+              <field name="estado"/>
+            </group>
+            <group>
+              <field name="cliente"/>
+              <field name="phone_number"/>
+            </group>
+            <group>
+              <field name="fecha_recarga"/>
+              <field name="linea"/>
+            </group>
+            <group>
+              <field name="oferta"/>
+              <field name="precio"/>
+              <field name="saldo"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.cashline_form">
+      <field name="name">recharge_movil.cashline.form</field>
+      <field name="model">recharge_movil.cashline</field>
+      <field name="arch" type="xml">
+        <form string="Línea de recarga">
+          <sheet>
+            <group>
+              <field name="name"/>
+            </group>
+            <group>
+              <field name="saldo"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.recarga_form_quick">
+      <field name="name">recharge_movil.recarga.form</field>
+      <field name="model">recharge_movil.recarga</field>
+      <field name="arch" type="xml">
+        <form string="Recarga">
+            <group>
+              <field name="cliente"/>
+              <field name="phone_number"/>
+              <field name="linea"/>
+              <field name="oferta"/>
+              <field name="fecha_recarga"/>
+            </group>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.oferta_form">
+      <field name="name">recharge_movil.oferta.form</field>
+      <field name="model">recharge_movil.oferta</field>
+      <field name="arch" type="xml">
+        <form string="Oferta">
+          <sheet>
+            <group>
+              <field name="precio"/>
+              <field name="saldo"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.cliente_tree">
+      <field name="name">recharge_movil.cliente.tree</field>
+      <field name="model">base_enterprise.cliente</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="phone_number"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.recarga_tree">
+      <field name="name">recharge_movil.recarga.tree</field>
+      <field name="model">recharge_movil.recarga</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="cliente"/>
+          <field name="phone_number"/>
+          <field name="fecha_recarga"/>
+          <field name="precio"/>
+          <field name="saldo"/>
+          <field name="estado"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.oferta_tree">
+      <field name="name">recharge_movil.oferta.tree</field>
+      <field name="model">recharge_movil.oferta</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="precio"/>
+          <field name="saldo"/>
+        </tree>
+      </field>
+    </record>
+
+    <menuitem name="Recarga móvil" id="recharge_movil.menu_root" sequence="10" />
+    <menuitem name="Recarga móvil" id="recharge_movil.submenu" parent="recharge_movil.menu_root"/>
+
+    <menuitem name="Recargas" id="recharge_movil.menu_recarga" parent="recharge_movil.menu_root" sequence="18"
+              />
+
+    <menuitem name="Recargas" id="recharge_movil.submenu_recarga" parent="recharge_movil.menu_recarga"
+              action="recharge_movil.action_recarga"/>
+
+    <menuitem name="Ofertas" id="recharge_movil.submenu_oferta" parent="recharge_movil.menu_recarga"
+              action="recharge_movil.action_oferta"/>
+
+    <menuitem name="Clientes" id="recharge_movil.menu_cliente" parent="recharge_movil.menu_root" sequence="19"
+              action="recharge_movil.action_cliente"/>
+
+    <menuitem name="Gestion de Saldo" id="recharge_movil.menu_cashline" parent="recharge_movil.menu_root" sequence="20"
+              action="recharge_movil.action_cashline"/>
+
+    <menuitem name="Estadísticas" id="recharge_movil.menu_datascience" parent="recharge_movil.menu_root" sequence="21"
+              action="recharge_movil.action_datascience"/>
+
+  </data>
+</odoo>

@@ -1,0 +1,6 @@
+<odoo>
+  <data>
+    <menuitem name="Recarga móvil" id="recharge_movil.menu_root" sequence="1" web_icon="recharge_movil,static/description/icon.png" groups="group_recharge_movil" />
+    <menuitem name="Recarga móvil" id="recharge_movil.submenu" parent="recharge_movil.menu_root" groups="group_recharge_movil"/>
+  </data>
+</odoo>

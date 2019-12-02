@@ -1,0 +1,80 @@
+<odoo>
+  <data>
+    <record model="ir.actions.act_window" id="recharge_movil.action_cashline">
+      <field name="name">Gestión de Saldo</field>
+      <field name="res_model">recharge_movil.cashline</field>
+      <field name="view_mode">kanban,form</field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.cashline_kanban">
+      <field name="name">recharge_movil.cashline.kanban</field>
+      <field name="model">recharge_movil.cashline</field>
+      <field name="arch" type="xml">
+        <kanban>
+          <templates>
+            <t t-set="datos" t-value="data" />
+            <t t-name="kanban-box">
+              <div t-attf-class="oe_kanban_global_click">
+                <div class="o_dropdown_kanban dropdown" tabindex="-1">
+                  <a class="dropdown-toggle o-no-caret btn" data-toggle="dropdown" href="#" role="button" aria-label="Opciones" title="Opciones">
+                    <span class="fa fa-th-large"/>
+                  </a>
+                  <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <a type="delete" role="menuitem" class="dropdown-item">Borrar</a>
+                    <a name="%(launch_cashline_wizard)d" type="action" role="menuitem" class="dropdown-item">Agregar Saldo</a>
+                  </div>
+                </div>
+                <div class="card bg-primary text-center mt-3">
+                  <h4 class="card-header o_default_snippet_text"><field name="name" /></h4>
+                    <div class="card-body">
+                      <h2 class="card-title">
+                        <span class="s_comparisons_currency o_default_snippet_text">$</span>
+                        <span class="s_comparisons_price"><b class="o_default_snippet_text"><field name="disponible" /></b></span>
+                      </h2>
+                    </div>
+                    <ul class="list-group list-group-flush" style="color:black;">
+                      <li class="list-group-item o_default_snippet_text"><strong>Tipo de línea:</strong> <field name="tipo_linea" /></li>
+                      <li class="list-group-item o_default_snippet_text"><strong>Saldo inicial:</strong> <field name="saldo" /></li>
+                      <li class="list-group-item o_default_snippet_text"><strong>Saldo gastado:</strong> $<field name="gastado" /></li>
+                      <li class="list-group-item o_default_snippet_text" attrs="{'invisible': [('tipo_linea', '!=', 2)],}"><strong>Retorno de bono:</strong> $<field name="bono" /></li>
+                      <li class="list-group-item o_default_snippet_text"><strong>Recargas realizadas:</strong> <field name="realizada" /></li>
+                      <!--
+                      <li class="list-group-item o_default_snippet_text"><strong>Recargas pendientes:</strong> <field name="pendiente" /></li>
+                      -->
+                      <li class="list-group-item o_default_snippet_text"><strong>Saldo comprometido:</strong> $<field name="comprometido" /></li>
+                    </ul>
+                    <div class="card-footer">
+                      <strong>Cantidad recaudada:</strong> $<field name="recaudado" />
+                    </div>
+                  </div>
+                </div>
+            </t>
+          </templates>
+        </kanban>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="recharge_movil.cashline_form">
+      <field name="name">recharge_movil.cashline.form</field>
+      <field name="model">recharge_movil.cashline</field>
+      <field name="arch" type="xml">
+        <form string="Línea de recarga">
+          <sheet>
+            <group>
+              <field name="name"/>
+            </group>
+            <group>
+              <field name="tipo_linea"/>
+            </group>
+            <group>
+              <field name="saldo"/>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <menuitem name="Gestion de Saldo" id="recharge_movil.menu_cashline" parent="recharge_movil.menu_root"
+              action="recharge_movil.action_cashline"/>
+  </data>
+</odoo>
